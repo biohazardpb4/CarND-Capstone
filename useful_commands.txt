@@ -1,0 +1,15 @@
+show container ID:
+
+docker ps
+
+start another bash shell:
+
+docker exec -it <container_id> bash
+
+Build the docker container:
+
+docker build . -t capstone
+
+Run the docker file:
+
+docker run -p 4567:4567 -v $PWD:/capstone -v /tmp/log:/root/.ros/ --rm -it capstone
