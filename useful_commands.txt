@@ -13,3 +13,11 @@ docker build . -t capstone
 Run the docker file:
 
 docker run -p 4567:4567 -v $PWD:/capstone -v /tmp/log:/root/.ros/ --rm -it capstone
+
+start the simulator:
+
+cd ~/car && linux_sys_int/sys_int.x86_64
+
+launch ROS (within Docker container):
+
+roslaunch launch/styx.launch
