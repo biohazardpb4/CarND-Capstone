@@ -21,3 +21,20 @@ cd ~/car && linux_sys_int/sys_int.x86_64
 launch ROS (within Docker container):
 
 roslaunch launch/styx.launch
+
+install pyside (for rtq_plot):
+
+sudo apt-get install python3-pyside
+easy_install PySide
+
+rtq_plot (http://wiki.ros.org/ROS/Tutorials/UnderstandingTopics#Using_rostopic_hz):
+
+rosrun rqt_plot rqt_plot
+
+install DBW:
+
+bash <(wget -q -O - https://bitbucket.org/DataspeedInc/dbw_mkz_ros/raw/default/dbw_mkz/scripts/sdk_install.bash)
+
+install missing color package:
+
+sudo apt update && sudo apt install --reinstall python-catkin-pkg python-catkin-pkg-modules
