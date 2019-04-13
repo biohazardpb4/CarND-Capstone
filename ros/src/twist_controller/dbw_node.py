@@ -72,7 +72,7 @@ class DBWNode(object):
         self.loop()
 
     def loop(self):
-        rate = rospy.Rate(50) # 50Hz
+        rate = rospy.Rate(25) # 50Hz
         while not rospy.is_shutdown():
             self.throttle, self.brake, self.steering = self.controller.control(
                 current_vel=self.current_vel, dbw_enabled=self.dbw_enabled,
