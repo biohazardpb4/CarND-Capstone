@@ -65,10 +65,10 @@ class Controller(object):
             brake = abs(decel)*self.vehicle_mass*self.wheel_radius # Torque N*m
         
         # debugging junk -- get it out of here when done
-        throttle = 0.15
-        brake = 0
-#         steering = math.radians(45)
-#         if int(current_time)%20 > 10:
-#             steering = math.radians(-45)
+        # throttle = 0.15
+        # brake = 0
+        # steering = math.radians(45)
+        # if int(current_time)%20 > 10:
+        #     steering = math.radians(-45)
         
         return throttle, brake, steering

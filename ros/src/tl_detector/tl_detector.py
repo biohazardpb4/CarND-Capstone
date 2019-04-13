@@ -36,7 +36,10 @@ class TLDetector(object):
         rely on the position of the light and the camera image to predict it.
         '''
         sub3 = rospy.Subscriber('/vehicle/traffic_lights', TrafficLightArray, self.traffic_cb)
-        sub6 = rospy.Subscriber('/image_color', Image, self.image_cb)
+        
+        # Haaack -- wire pose updates to the image callback so that we can save resources
+        sub6 = rospy.Subscriber('/current_pose', PoseStamped, self.image_cb)
+        # sub6 = rospy.Subscriber('/image_color', Image, self.image_cb)
 
         config_string = rospy.get_param("/traffic_light_config")
         self.config = yaml.load(config_string)
@@ -75,7 +78,8 @@ class TLDetector(object):
 
         """
         self.has_image = True
-        self.camera_image = msg
+        # Haaaack -- subscribe to pose updates so that we save resources.
+        # self.camera_image = msg
         light_wp, state = self.process_traffic_lights()
 
         '''
@@ -96,11 +100,12 @@ class TLDetector(object):
             self.upcoming_red_light_pub.publish(Int32(self.last_wp))
         self.state_count += 1
 
-    def get_closest_waypoint(self, pose):
+    def get_closest_waypoint(self, x, y):
         """Identifies the closest path waypoint to the given position
             https://en.wikipedia.org/wiki/Closest_pair_of_points_problem
         Args:
-            pose (Pose): position to match a waypoint to
+            x: x position to match a waypoint to
+            y: y position to match a waypoint to
 
         Returns:
             int: index of the closest waypoint in self.waypoints
@@ -145,8 +150,8 @@ class TLDetector(object):
 
         # List of positions that correspond to the line to stop in front of for a given intersection
         stop_line_positions = self.config['stop_line_positions']
-        if(self.pose):
-            car_position = self.get_closest_waypoint(self.pose.pose)
+        if(self.pose and self.waypoint_tree):
+            car_wp_idx = self.get_closest_waypoint(self.pose.pose.position.x, self.pose.pose.position.y)
 
             # Find the closest visible traffic light (if one exists)
             diff = len(self.waypoints.waypoints)
