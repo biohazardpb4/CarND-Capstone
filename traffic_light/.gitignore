@@ -8,3 +8,4 @@ udacity_testarea_rgb
 ssd_inception_v2_coco_11_06_2017
 *.tar.gz
 data
+train
