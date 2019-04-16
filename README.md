@@ -23,16 +23,28 @@ To learn about training an object detector, I read over the following blog posts
 When it came to the practicalities of training the object detection model, the following repo really helped me avoid the gotchas:
 https://github.com/alex-lechner/Traffic-Light-Classification
 
-#### Data Set
+#### Data Sets
 
 To train the model used in this project, the data that was gathered by Alex was used. I began collecting and labeling my own data using a combination of the simulator and labelImg, but unfortunately ran out of time.
 
-Steps involve in training model (with gathered data -- I did not complete this):
-- record ros bag from simulator to gather unlabeled images
-  - rosrun image_view image_saver _sec_per_frame:=1 image:=/image_color
-- use labelimg to label images
-  - downloaded from here https://github.com/tzutalin/labelImg
-- write Python script to convert to TensorFlow training Examples
+Steps involved in gathering data
+1. downloaded pre-labeled data sets from https://github.com/alex-lechner/Traffic-Light-Classification
+
+Attempted gathering of data from simulator -- I did not complete this:
+1. record unlabeled images from simulator (done)
+  1. rosrun image_view image_saver _sec_per_frame:=1 image:=/image_color
+1. use labelimg to label images (done)
+  1. downloaded from here https://github.com/tzutalin/labelImg
+1. write Python script to convert to TensorFlow training Examples (unfinished)
+
+#### Training
+
+Steps involved in training
+1. Configure the model at traffic_light/ssd_inception_v2_coco.config to use appropriate label map, training data set and validation data set
+1. Use the training script provided by https://github.com/tensorflow/models/tree/master/research/ to train the model
+1. Freeze the model so that it can be used for inferrence
+
+Gotchas: I attempted several times to train the SSD model on AWS with a GPU instance, but could never produce the magic incantation necessary to get it to run. After many wasted hours, I went back and trained the model on the Udacity sim with the GPU enabled.
 
 #### Model Selection
 
@@ -42,11 +54,6 @@ Steps involve in training model (with gathered data -- I did not complete this):
 #### Inferrence
 
 - Code from the object detection subproject was modified to do inferrence within ROS
-
-#### Training Gotchas
-
-I attempted several times to train the SSD model on AWS with a GPU instance, but could never produce the magic incantation necessary to get it to run. After many wasted hours, I went back and trained the model on the Udacity sim with the GPU enabled.
-
 
 ## Installation
 
