@@ -1,5 +1,55 @@
 This is the project repo for the final project of the Udacity Self-Driving Car Nanodegree: Programming a Real Self-Driving Car. For more information about the project, see the project introduction [here](https://classroom.udacity.com/nanodegrees/nd013/parts/6047fe34-d93c-4f50-8336-b70ef10cb4b2/modules/e1a23b06-329a-4684-a717-ad476f0d8dff/lessons/462c933d-9f24-42d3-8bdc-a08a5fc866e4/concepts/5ab4b122-83e6-436d-850f-9f4d26627fd9).
 
+## System Architecture
+
+This project heavily utilizes ROS (Robot Operating System) which is a runtime environment which facilitates service management, communication, and API generation.
+
+The ROS nodes involved are:
+- a waypoint loader (loads a set of static known waypoints in the area)
+- a waypoint updater (dynamically sets the velocity associated with waypoints to achieve maneuvers like slowing down for a stop light).
+- an object detection node (used to detect traffic lights)
+- a waypoint follower (smoothly reaches target waypoint velocities specified by the waypoint loader and updater)
+- a control node (attempts to minimize control error using PID controllers for steering and acceleration)
+- a DBW (Drive By Wire) node which interfaces with the car hardware
+- a simulator bridge (allows ROS to talk to the Unity3D simulator)
+
+### Traffic Light Detection
+
+#### Training Methodology
+
+To learn about training an object detector, I read over the following blog posts and repos:
+    - blog post: https://medium.com/@anthony_sarkis/self-driving-cars-implementing-real-time-traffic-light-detection-and-classification-in-2017-7d9ae8df1c58
+    - the repo for that post: https://github.com/swirlingsand/deeper-traffic-lights/blob/master/object_detection_sim_run.ipynb
+When it came to the practicalities of training the object detection model, the following repo really helped me avoid the gotchas:
+https://github.com/alex-lechner/Traffic-Light-Classification
+
+#### Data Set
+
+To train the model used in this project, the data that was gathered by Alex was used. I began collecting and labeling my own data using a combination of the simulator and labelImg, but unfortunately ran out of time.
+
+Steps involve in training model (with gathered data -- I did not complete this):
+- record ros bag from simulator to gather unlabeled images
+  - rosrun image_view image_saver _sec_per_frame:=1 image:=/image_color
+- use labelimg to label images
+  - downloaded from here https://github.com/tzutalin/labelImg
+- write Python script to convert to TensorFlow training Examples
+
+#### Model Selection
+
+- As indicated in Alex's Github repo, the TensorFlow object detection API is a good choice for detecting traffic lights. It offers a very declarative way to do transfer learning which saves on a ton of training time: https://github.com/tensorflow/models/tree/master/research/object_detection#tensorflow-object-detection-api
+
+
+#### Inferrence
+
+- Code from the object detection subproject was modified to do inferrence within ROS
+
+#### Training Gotchas
+
+I attempted several times to train the SSD model on AWS with a GPU instance, but could never produce the magic incantation necessary to get it to run. After many wasted hours, I went back and trained the model on the Udacity sim with the GPU enabled.
+
+
+## Installation
+
 Please use **one** of the two installation options, either native **or** docker installation.
 
 ### Native Installation
