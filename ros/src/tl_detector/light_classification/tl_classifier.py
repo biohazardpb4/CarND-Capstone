@@ -63,9 +63,9 @@ class TLClassifier(object):
                 # 1 = green, 2 = red, 3 = yellow, 4 = unknown
                 labels = {1: 'green', 2: 'red', 3: 'yellow'}
                 if class_id in labels:
-                    rospy.logerr("traffic light label: %s", labels[class_id])
+                    rospy.loginfo("traffic light label: %s", labels[class_id])
                 else:
-                    rospy.logerr("traffic light class not found: %d", class_id)
+                    rospy.loginfo("traffic light class not found: %d", class_id)
                 if class_id == 2:
                     return TrafficLight.RED
         return TrafficLight.UNKNOWN
