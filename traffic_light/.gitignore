@@ -1,5 +1,4 @@
 *.zip
-*.record
 *.txt
 simulator_dataset_rgb
 udacity_testarea_rgb

@@ -29,17 +29,15 @@ https://github.com/alex-lechner/Traffic-Light-Classification
 
 #### Data Sets
 
-To train the model used in this project, the data that was gathered by Alex was used. I began collecting and labeling my own data using a combination of the simulator and labelImg, but unfortunately ran out of time.
+I began collected and labeled my own data using a combination of the simulator and labelImg.
 
-Steps involved in gathering data
-1. downloaded pre-labeled data sets from https://github.com/alex-lechner/Traffic-Light-Classification
-
-Attempted gathering of data from simulator -- I did not complete this:
+Gather data from simulator:
 1. record unlabeled images from simulator (done)
-  1. rosrun image_view image_saver _sec_per_frame:=1 image:=/image_color
+   1. rosrun image_view image_saver _sec_per_frame:=1 image:=/image_color
 1. use labelimg to label images (done)
-  1. downloaded from here https://github.com/tzutalin/labelImg
-1. write Python script to convert to TensorFlow training Examples (unfinished)
+   1. downloaded from here https://github.com/tzutalin/labelImg
+1. write Python script to convert to TensorFlow training Examples
+    1. This is based on https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/using_your_own_dataset.md
 
 #### Training
 
