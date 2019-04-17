@@ -7,7 +7,7 @@ import os
 
 GRAPH_FILE = os.path.join(
     os.path.dirname(os.path.abspath(__file__)),
-    'frozen_inference_graph_v0.pb')
+    'frozen_inference_graph.pb')
 
 class TLClassifier(object):
     def __init__(self):
